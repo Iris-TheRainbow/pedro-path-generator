@@ -21,8 +21,8 @@
 
   let pointRadius = .15;
   let lineWidth = 1.14;
-  let robotWidth = 1.9;
-  let robotHeight = 1.8;
+  let robotWidth = 19;
+  let robotHeight = 18;
 
   let percent: number = 0;
 
@@ -33,6 +33,10 @@
     .scaleLinear()
     .domain([-72, 72])
     .range([-72, twoElement?.clientWidth ?? 72]);
+  $: x2 = d3
+    .scaleLinear()
+    .domain([0, 144])
+    .range([0, twoElement?.clientWidth ?? 144])
 
   /**
    * Converter for Y axis from inches to pixels.
@@ -41,6 +45,13 @@
     .scaleLinear()
     .domain([-72, 72])
     .range([twoElement?.clientHeight ?? 72, -72]);
+
+  $: y2 = d3
+    .scaleLinear()
+    .domain([0, 144])
+    .range([twoElement?.clientHeight ?? 144, 0]);
+  
+  
 
   let lineGroup = new Two.Group();
   lineGroup.id = "line-group";
@@ -64,9 +75,9 @@
   $: points = (() => {
     let _points = [];
     let startPointElem = new Two.Circle(
-      x(startPoint.x),
-      y(startPoint.y),
-      x(pointRadius)
+      x2(startPoint.x),
+      y2(startPoint.y),
+      x2(pointRadius)
     );
     startPointElem.id = `point-0-0`;
     startPointElem.fill = lines[0].color;
@@ -81,9 +92,9 @@
           pointGroup.id = `point-${idx + 1}-${idx1}`;
 
           let pointElem = new Two.Circle(
-            x(point.x),
-            y(point.y),
-            x(pointRadius)
+            x2(point.x),
+            y2(point.y),
+            x2(pointRadius)
           );
           pointElem.id = `point-${idx + 1}-${idx1}-background`;
           pointElem.fill = line.color;
@@ -91,9 +102,9 @@
 
           let pointText = new Two.Text(
             `${idx1}`,
-            x(point.x),
-            y(point.y - 0.15),
-            x(pointRadius)
+            x2(point.x),
+            y2(point.y - 0.15),
+            x2(pointRadius)
           );
           pointText.id = `point-${idx + 1}-${idx1}-text`;
           pointText.size = x(1.55);
@@ -108,9 +119,9 @@
           _points.push(pointGroup);
         } else {
           let pointElem = new Two.Circle(
-            x(point.x),
-            y(point.y),
-            x(pointRadius)
+            x2(point.x),
+            y2(point.y),
+            x2(pointRadius)
           );
           pointElem.id = `point-${idx + 1}-${idx1}`;
           pointElem.fill = line.color;
@@ -155,21 +166,21 @@
 
         let points = [
           new Two.Anchor(
-            x(_startPoint.x),
-            y(_startPoint.y),
-            x(_startPoint.x),
-            y(_startPoint.y),
-            x(cp1.x),
+            x2(_startPoint.x),
+            y2(_startPoint.y),
+            x2(_startPoint.x),
+            y2(_startPoint.y),
+            x2(cp1.x),
             y(cp1.y),
             Two.Commands.move
           ),
           new Two.Anchor(
-            x(line.endPoint.x),
-            y(line.endPoint.y),
-            x(cp2.x),
-            y(cp2.y),
-            x(line.endPoint.x),
-            y(line.endPoint.y),
+            x2(line.endPoint.x),
+            y2(line.endPoint.y),
+            x2(cp2.x),
+            y2(cp2.y),
+            x2(line.endPoint.x),
+            y2(line.endPoint.y),
             Two.Commands.curve
           ),
         ];
@@ -179,16 +190,16 @@
         lineElem.automatic = false;
       } else {
         lineElem = new Two.Line(
-          x(_startPoint.x),
+          x2(_startPoint.x),
           y(_startPoint.y),
-          x(line.endPoint.x),
+          x2(line.endPoint.x),
           y(line.endPoint.y)
         );
       }
 
       lineElem.id = `line-${idx + 1}`;
       lineElem.stroke = line.color;
-      lineElem.linewidth = d3.scaleLinear().domain([0, 144]).range([0, twoElement?.clientWidth ?? 144])(lineWidth);
+      lineElem.linewidth = x2(lineWidth);
       lineElem.noFill();
 
       _path.push(lineElem);
