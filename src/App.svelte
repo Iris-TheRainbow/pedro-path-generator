@@ -31,16 +31,16 @@
    */
   $: x = d3
     .scaleLinear()
-    .domain([0, 144])
-    .range([0, twoElement?.clientWidth ?? 144]);
+    .domain([-72, 72])
+    .range([-72, twoElement?.clientWidth ?? 72]);
 
   /**
    * Converter for Y axis from inches to pixels.
    */
   $: y = d3
     .scaleLinear()
-    .domain([0, 144])
-    .range([twoElement?.clientHeight ?? 144, 0]);
+    .domain([-72, 72])
+    .range([twoElement?.clientHeight ?? 72, -72]);
 
   let lineGroup = new Two.Group();
   lineGroup.id = "line-group";
