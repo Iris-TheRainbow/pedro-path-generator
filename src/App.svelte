@@ -19,10 +19,10 @@
   let two: Two;
   let twoElement: HTMLDivElement;
 
-  let pointRadius = 1.15;
-  let lineWidth = 0.57;
-  let robotWidth = 19;
-  let robotHeight = 18;
+  let pointRadius = 1/1.15;
+  let lineWidth = 1/0.57;
+  let robotWidth = 1/19;
+  let robotHeight = 1/18;
 
   let percent: number = 0;
 
