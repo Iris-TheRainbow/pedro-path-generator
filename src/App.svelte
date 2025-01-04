@@ -188,7 +188,7 @@
 
       lineElem.id = `line-${idx + 1}`;
       lineElem.stroke = line.color;
-      lineElem.linewidth = x(lineWidth);
+      lineElem.linewidth = d3.scaleLinear().domain([0, 144]).range([0, twoElement?.clientWidth ?? 144])(lineWidth);
       lineElem.noFill();
 
       _path.push(lineElem);
